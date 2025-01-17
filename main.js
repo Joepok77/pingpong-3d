@@ -13,10 +13,11 @@ function init() {
     let ballDirection = { x: 3, z: 4 };
     const paddleSpeed = 8;
 
-    // Scores
-    let scores = { player: 0, ai: 0 };
+    
+    let scores = { player1: 0, player2: 0 };
+    let isGameOver = false;
 
-    // Ajouter l'affichage des scores
+
     const scoreElement = document.createElement('div');
     scoreElement.style.position = 'absolute';
     scoreElement.style.top = '20px';
@@ -25,10 +26,59 @@ function init() {
     scoreElement.style.color = 'white';
     scoreElement.style.fontSize = '20px';
     scoreElement.style.fontFamily = 'Arial, sans-serif';
-    scoreElement.innerHTML = `Player: ${scores.player} | AI: ${scores.ai}`;
+    scoreElement.innerHTML = `Player 1: ${scores.player1} | Player 2: ${scores.player2}`;
     document.body.appendChild(scoreElement);
 
-    // Scène
+    // Conteneur pour le message de fin et le bouton
+    const endGameContainer = document.createElement('div');
+    endGameContainer.style.position = 'absolute';
+    endGameContainer.style.top = '50%';
+    endGameContainer.style.left = '50%';
+    endGameContainer.style.transform = 'translate(-50%, -50%)';
+    endGameContainer.style.padding = '20px';
+    endGameContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    endGameContainer.style.color = 'white';
+    endGameContainer.style.fontSize = '20px';
+    endGameContainer.style.fontFamily = 'Arial, sans-serif';
+    endGameContainer.style.textAlign = 'center';
+    endGameContainer.style.borderRadius = '10px';
+    endGameContainer.style.display = 'none'; 
+    document.body.appendChild(endGameContainer);
+
+    const winnerMessage = document.createElement('p');
+    winnerMessage.style.margin = '0 0 20px 0';
+    endGameContainer.appendChild(winnerMessage);
+
+    function checkGameEnd() {
+        if (scores.player1 === 2 || scores.player2 === 2) {
+            isGameOver = true;
+            const winner = scores.player1 === 2 ? 'Player 1 wins!' : 'Player 2 wins!';
+            winnerMessage.innerText = winner;
+            endGameContainer.style.display = 'block'; 
+            restartButton.style.display = 'block'; 
+        }
+    }
+
+  
+    const restartButton = document.createElement('button');
+    restartButton.innerText = 'Recommencer';
+    restartButton.style.position = 'absolute';
+    restartButton.style.top = '60%';
+    restartButton.style.left = '50%';
+    restartButton.style.transform = 'translate(-50%, -50%)';
+    restartButton.style.padding = '10px 20px';
+    restartButton.style.fontSize = '16px';
+    restartButton.style.cursor = 'pointer';
+    restartButton.style.display = 'none'; 
+    document.body.appendChild(restartButton);
+
+    restartButton.addEventListener('click', () => {
+        resetGame();
+        restartButton.style.display = 'none'; 
+        endGameContainer.style.display = 'none'; 
+    });
+
+    
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x87ceeb);
 
@@ -37,7 +87,7 @@ function init() {
     camera.position.set(0, 150, TABLE_LENGTH / 2 + 200);
     camera.lookAt(0, 0, 0);
 
-    // Renderer
+    
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(WIDTH, HEIGHT);
     document.body.appendChild(renderer.domElement);
@@ -56,6 +106,18 @@ function init() {
     const table = new THREE.Mesh(tableGeometry, tableMaterial);
     table.position.set(0, -5, 0);
     scene.add(table);
+
+    // Murs latéraux
+    const wallGeometry = new THREE.BoxGeometry(10, 50, TABLE_LENGTH);
+    const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x888888 });
+
+    const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
+    leftWall.position.set(-TABLE_WIDTH / 2 - 5, 25, 0);
+    scene.add(leftWall);
+
+    const rightWall = leftWall.clone();
+    rightWall.position.set(TABLE_WIDTH / 2 + 5, 25, 0);
+    scene.add(rightWall);
 
     // Ligne centrale
     const lineGeometry = new THREE.PlaneGeometry(TABLE_WIDTH, 2);
@@ -91,27 +153,24 @@ function init() {
     ball.position.set(0, 10, 0);
     scene.add(ball);
 
-    // Contrôle du paddle joueur
+    // Contrôle des paddles
     document.addEventListener('keydown', (event) => {
-        if (paddle1) {
+        const halfTableWidth = TABLE_WIDTH / 2;
+
+        if (paddle1 && !isGameOver) {
             if (event.key === 'ArrowLeft') paddle1.position.x -= paddleSpeed;
             if (event.key === 'ArrowRight') paddle1.position.x += paddleSpeed;
-
-            const halfTableWidth = TABLE_WIDTH / 2;
             if (paddle1.position.x < -halfTableWidth + 25) paddle1.position.x = -halfTableWidth + 25;
             if (paddle1.position.x > halfTableWidth - 25) paddle1.position.x = halfTableWidth - 25;
         }
-    });
 
-    function moveAIPaddle() {
-        if (paddle2) {
-            if (paddle2.position.x < ball.position.x) {
-                paddle2.position.x += paddleSpeed / 2;
-            } else if (paddle2.position.x > ball.position.x) {
-                paddle2.position.x -= paddleSpeed / 2;
-            }
+        if (paddle2 && !isGameOver) {
+            if (event.key === 'a') paddle2.position.x -= paddleSpeed;
+            if (event.key === 'd') paddle2.position.x += paddleSpeed;
+            if (paddle2.position.x < -halfTableWidth + 25) paddle2.position.x = -halfTableWidth + 25;
+            if (paddle2.position.x > halfTableWidth - 25) paddle2.position.x = halfTableWidth - 25;
         }
-    }
+    });
 
     function checkCollisionWithPaddle(paddle) {
         return (
@@ -125,14 +184,21 @@ function init() {
     }
 
     function updateScore(player) {
-        if (player === 'player') {
-            scores.player++;
-        } else if (player === 'ai') {
-            scores.ai++;
+        if (player === 'player1') {
+            scores.player1++;
+        } else if (player === 'player2') {
+            scores.player2++;
         }
 
-        // Mettre à jour l'affichage des scores
-        scoreElement.innerHTML = `Player: ${scores.player} | AI: ${scores.ai}`;
+        scoreElement.innerHTML = `Player 1: ${scores.player1} | Player 2: ${scores.player2}`;
+        checkGameEnd();
+        resetBall();
+    }
+
+    function resetGame() {
+        scores = { player1: 0, player2: 0 };
+        scoreElement.innerHTML = `Player 1: 0 | Player 2: 0`;
+        isGameOver = false;
         resetBall();
     }
 
@@ -143,6 +209,8 @@ function init() {
 
     function animate() {
         requestAnimationFrame(animate);
+
+        if (isGameOver) return;
 
         ball.position.x += ballDirection.x;
         ball.position.z += ballDirection.z;
@@ -160,14 +228,13 @@ function init() {
         }
 
         if (ball.position.z > TABLE_LENGTH / 2) {
-            updateScore('ai');
+            updateScore('player2');
         }
 
         if (ball.position.z < -TABLE_LENGTH / 2) {
-            updateScore('player');
+            updateScore('player1');
         }
 
-        moveAIPaddle();
         renderer.render(scene, camera);
     }
 

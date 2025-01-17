@@ -1,0 +1,11 @@
+Model Information:
+* title:	ping pong ball
+* source:	https://sketchfab.com/3d-models/ping-pong-ball-74b56b99cc79448485f2ce603c99c074
+* author:	keemween (https://sketchfab.com/keemween)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "ping pong ball" (https://sketchfab.com/3d-models/ping-pong-ball-74b56b99cc79448485f2ce603c99c074) by keemween (https://sketchfab.com/keemween) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
