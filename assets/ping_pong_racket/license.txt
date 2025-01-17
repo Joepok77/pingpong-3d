@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ping Pong Racket
+* source:	https://sketchfab.com/3d-models/ping-pong-racket-cee4b24f04c842688dc2e5cbc1cabfb5
+* author:	PolyChromic (https://sketchfab.com/PolyChromicDesing)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ping Pong Racket" (https://sketchfab.com/3d-models/ping-pong-racket-cee4b24f04c842688dc2e5cbc1cabfb5) by PolyChromic (https://sketchfab.com/PolyChromicDesing) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
