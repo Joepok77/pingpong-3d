@@ -107,12 +107,3 @@ Le but du jeu est simple : **atteindre 5 points avant votre adversaire** ! Défe
 
 ---
 
-## 🤝 Contribuer
-
-Les contributions sont les bienvenues ! Si vous souhaitez apporter des améliorations ou signaler un problème, ouvrez une **issue** ou soumettez une **pull request**.
-
----
-
-## 📄 Licence
-
-Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
