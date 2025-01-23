@@ -32,12 +32,12 @@ Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) sur votre machine.
 
 1. Clonez le dépôt :
    ```bash
-   git clone https://github.com/votre-utilisateur/ping-pong-3d.git
+   git clone https://github.com/Joepok77/pingpong-3d.git
    ```
 
 2. Accédez au dossier du projet :
    ```bash
-   cd ping-pong-3d
+   cd pingpong-3d
    ```
 
 3. Installez les dépendances :
