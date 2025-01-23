@@ -72,12 +72,12 @@ Assurez-vous d'avoir installé [Node.js](https://nodejs.org/) sur votre machine.
 ## 🎮 Commandes dans le jeu
 
 - **Joueur 1** :
-  - Déplacement vers le haut : `W`
-  - Déplacement vers le bas : `S`
+  - Déplacement vers le haut : `a`
+  - Déplacement vers le bas : `d`
 
 - **Joueur 2** :
-  - Déplacement vers le haut : `Flèche haut`
-  - Déplacement vers le bas : `Flèche bas`
+  - Déplacement vers le haut : `Flèche gauche`
+  - Déplacement vers le bas : `Flèche droite`
 
 ---
 
