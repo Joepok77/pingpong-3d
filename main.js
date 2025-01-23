@@ -50,9 +50,10 @@ function init() {
     endGameContainer.appendChild(winnerMessage);
 
     function checkGameEnd() {
-        if (scores.player1 === 2 || scores.player2 === 2) {
+    if (scores.player1 === 5 || scores.player2 === 5) {
+
             isGameOver = true;
-            const winner = scores.player1 === 2 ? 'Player 1 wins!' : 'Player 2 wins!';
+            const winner = scores.player1 === 5 ? 'Player 1 wins!' : 'Player 2 wins!';
             winnerMessage.innerText = winner;
             endGameContainer.style.display = 'block'; 
             restartButton.style.display = 'block'; 
